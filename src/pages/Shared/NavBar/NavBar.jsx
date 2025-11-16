@@ -1,8 +1,15 @@
 import React from "react";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../components/Logo/Logo";
-import { NavLink } from "react-router";
 
 const NavBar = () => {
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut().catch(console.log);
+  };
+
   const links = (
     <>
       <li>
@@ -16,6 +23,7 @@ const NavBar = () => {
       </li>
     </>
   );
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -28,13 +36,7 @@ const NavBar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
           <ul
@@ -44,15 +46,28 @@ const NavBar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          <Logo></Logo>
-        </a>
+        <Link className="btn btn-ghost text-xl">
+          <Logo />
+        </Link>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <button onClick={handleLogOut} className="btn">
+            Log Out
+          </button>
+        ) : (
+          <Link className="btn" to="/login">
+            Log In
+          </Link>
+        )}
+        <Link className="btn btn-primary text-black mx-4" to="/rider">
+          Be a Rider
+        </Link>
       </div>
     </div>
   );
