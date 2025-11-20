@@ -9,46 +9,77 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Rider from "../pages/Rider/Rider";
+import SendParcel from "../pages/sendParcel/SendParcel";
+import MyParcels from "../pages/Dashboard/MyParcels";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component : RootLayout,
-    errorElement:<ErrorElement></ErrorElement>,
-    children :[
-        {
-            index: true,
-            Component:Home
-        },
-        {
-          path: '/coverage',
-          Component: Coverage,
-          loader: () => fetch('/serviceCenters.json').then(res => res.json())
-        },
+    Component: RootLayout,
+    errorElement: <ErrorElement></ErrorElement>,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "/coverage",
+        Component: Coverage,
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "/send-parcel",
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+        element: (
+          <PrivateRoute>
+            <SendParcel></SendParcel>
+          </PrivateRoute>
+        ),
+      },
 
-        {
-          path: '/about',
-          Component: About,
-          // loader: () => fetch('/serviceCenters.json').then(res => res.json())
-        }
-    ]
+      {
+        path: "/about",
+        Component: About,
+        // loader: () => fetch('/serviceCenters.json').then(res => res.json())
+      },
+    ],
   },
   {
-    path: '/',
+    path: "/",
     Component: AuthLayout,
     children: [
       {
-        path: '/login',
-        Component: Login
+        path: "/login",
+        Component: Login,
       },
       {
-        path: '/rider',
-        element: <PrivateRoute><Rider></Rider></PrivateRoute>
+        path: "/rider",
+        element: (
+          <PrivateRoute>
+            <Rider></Rider>
+          </PrivateRoute>
+        ),
       },
+
       {
-        path: '/register',
-        Component: Register
-      }
-    ]
-  }
+        path: "/register",
+        Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "my-parcels",
+        Component: MyParcels,
+      },
+    ],
+  },
 ]);

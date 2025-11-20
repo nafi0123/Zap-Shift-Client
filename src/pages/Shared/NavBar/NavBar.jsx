@@ -21,6 +21,12 @@ const NavBar = () => {
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
+      <li><NavLink to="/send-parcel">Send Parcel</NavLink></li>
+              {
+            user && <>
+                <li><NavLink to="/dashboard/my-parcels">My Parcels</NavLink></li>
+            </>
+        }
     </>
   );
 
@@ -46,9 +52,9 @@ const NavBar = () => {
             {links}
           </ul>
         </div>
-        <Link className="btn btn-ghost text-xl">
+        {/* <Link className="btn btn-ghost text-xl"> */}
           <Logo />
-        </Link>
+        {/* </Link> */}
       </div>
 
       <div className="navbar-center hidden lg:flex">

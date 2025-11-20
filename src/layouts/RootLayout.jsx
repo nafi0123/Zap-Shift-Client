@@ -6,13 +6,17 @@ import Footer from "../pages/Shared/Footer/Footer";
 const RootLayout = () => {
   return (
     <div className="bg-gray-100">
-          <div className="max-w-7xl mx-auto">
-      <NavBar></NavBar>
-      <Outlet></Outlet>
-      <Footer></Footer>
-    </div>
-    </div>
+      {/* Full width navbar */}
+      <NavBar />
 
+      {/* Centered main content */}
+      <main className="max-w-7xl mx-auto">
+        <Outlet />
+      </main>
+
+      {/* Full width footer */}
+      <Footer />
+    </div>
   );
 };
 
